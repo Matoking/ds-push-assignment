@@ -3,12 +3,12 @@ import time
 import pika
 
 
-def create_channel():
+def create_channel(host):
     """
     Create a channel connection
     """
     connection = pika.BlockingConnection(
-        pika.ConnectionParameters("localhost")
+        pika.ConnectionParameters(host=host)
     )
     channel = connection.channel()
     channel.queue_declare(queue="test_queue")

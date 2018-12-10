@@ -9,8 +9,9 @@ received_count = 0
 
 @click.command()
 @click.option("--payload-count", type=int, default=50)
-def main_cli(payload_count):
-    main(payload_count)
+@click.option("--host", type=str, default="localhost")
+def main_cli(payload_count, host):
+    main(payload_count, host)
 
 
 class Consumer(object):
@@ -26,8 +27,8 @@ class Consumer(object):
             ch.stop_consuming()
 
 
-def main(payload_count):
-    channel = create_channel()
+def main(payload_count, host):
+    channel = create_channel(host=host)
     consumer = Consumer(payload_count=payload_count)
 
     print("Waiting for {} messages...".format(payload_count))

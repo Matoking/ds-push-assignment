@@ -9,12 +9,13 @@ from push_example.utils import Timer, create_channel
 @click.command()
 @click.option("--payload-size", type=int, default=2048)
 @click.option("--payload-count", type=int, default=50)
-def main_cli(payload_size, payload_count):
-    main(payload_size, payload_count)
+@click.option("--host", type=str, default="localhost")
+def main_cli(payload_size, payload_count, host):
+    main(payload_size, payload_count, host)
 
 
-def main(payload_size, payload_count):
-    channel = create_channel()
+def main(payload_size, payload_count, host):
+    channel = create_channel(host=host)
 
     payload = b"".join([
         bytes([random.randint(0, 255)]) for _ in range(0, payload_size)

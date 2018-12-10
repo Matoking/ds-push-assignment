@@ -12,11 +12,12 @@ from push_example.utils import Timer
 @click.command()
 @click.option("--payload-size", type=int, default=2048)
 @click.option("--payload-count", type=int, default=50)
-def main_cli(payload_size, payload_count):
-    main(payload_size=payload_size, payload_count=payload_count)
+@click.option("--host", type=str, default="localhost")
+def main_cli(payload_size, payload_count, host):
+    main(payload_size=payload_size, payload_count=payload_count, host=host)
 
 
-def main(payload_size, payload_count):
+def main(payload_size, payload_count, host):
     print("Creating server and client...")
 
     threads = []
@@ -24,11 +25,13 @@ def main(payload_size, payload_count):
     with ProcessPoolExecutor(max_workers=2) as executor:
         with Timer() as t:
             threads += [
-                executor.submit(client_main, payload_count=payload_count),
+                executor.submit(
+                    client_main, payload_count=payload_count, host=host),
                 executor.submit(
                     server_main,
                     payload_size=payload_size,
-                    payload_count=payload_count)
+                    payload_count=payload_count,
+                    host=host)
             ]
 
             executor.shutdown(wait=True)

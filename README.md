@@ -19,7 +19,7 @@ scripts have finished sending and receiving the messages.
 
 # Installation
 
-How to install (assuming Virtualenv for Python 3 is installed)
+How to install (assuming Virtualenv for Python 3 is installed and RabbitMQ is running)
 
     $ virtualenv -p python3 venv
     $ source venv/bin/activate
